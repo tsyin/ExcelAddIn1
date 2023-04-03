@@ -8,6 +8,9 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Security.AccessControl;
 using System.Linq;
 using System.Collections.Generic;
+using Config;
+using System;
+using Config;
 
 namespace ExcelAddIn1
 {
@@ -51,10 +54,16 @@ namespace ExcelAddIn1
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
-            //if(e = box1.)
+            RibbonCheckBox[] chebox = { checkBox1, checkBox2, checkBox3, checkBox4 };
+            string[] checkname = { "东莞", "惠州", "深圳", "汕尾" };
+            for (int i = 0;i<chebox.Length;i++)
+            {
+                chebox[i].Checked = Config.ClsThisAddinConfig.GetInstance().readEle<bool>(checkname[i], false);
+                //Debug.WriteLine(chebox[i].Label, chebox[i].Checked.ToString());
+            }
         }
 
-        private ArrayList getCheckBox() 
+        private ArrayList getCheckedBox() 
         {
             RibbonCheckBox[] boxs = { checkBox1, checkBox2, checkBox3, checkBox4 };
             ArrayList list = new ArrayList();
@@ -104,20 +113,20 @@ namespace ExcelAddIn1
             Application app = Globals.ThisAddIn.Application;
             int count = wb.Count;
             //获得地市
-            ArrayList boxs = getCheckBox();
+            ArrayList boxs = getCheckedBox();
             string[] dishi = new string[boxs.Count];
             for (int i = 0; i < dishi.Length; i++)
             {
                 RibbonCheckBox tempbox = (RibbonCheckBox)boxs[i];
                 dishi[i] = tempbox.Label;
             }
-            List<Workbook> wbs = OpenFileDialogFile("打开需要的基本表格");
+            List<Workbook> wbs = OpenFileDialogFile("打开你需要的准备表");
         }
 
         //读取当前选中的地市
         private List<string> GetSelectCity() 
         {
-            ArrayList chBoxs = this.getCheckBox();
+            ArrayList chBoxs = this.getCheckedBox();
             List<string> citys = new List<string>();
             foreach (RibbonCheckBox item in chBoxs)
             {
@@ -132,6 +141,26 @@ namespace ExcelAddIn1
         {
             //读取当前选中的地市
             List<string> citys = GetSelectCity();
+        }
+
+        private void checkBox1_Click(object sender, RibbonControlEventArgs e)
+        {
+            Config.ClsThisAddinConfig.GetInstance().writeEle("东莞", checkBox1.Checked);
+        }
+
+        private void checkBox2_Click(object sender, RibbonControlEventArgs e)
+        {
+            Config.ClsThisAddinConfig.GetInstance().writeEle("惠州", checkBox2.Checked);
+        }
+
+        private void checkBox3_Click(object sender, RibbonControlEventArgs e)
+        {
+            Config.ClsThisAddinConfig.GetInstance().writeEle("深圳", checkBox3.Checked);
+        }
+
+        private void checkBox4_Click(object sender, RibbonControlEventArgs e)
+        {
+            Config.ClsThisAddinConfig.GetInstance().writeEle("汕尾", checkBox4.Checked);
         }
     }
 }

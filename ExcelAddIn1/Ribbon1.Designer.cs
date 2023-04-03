@@ -67,21 +67,25 @@
             // 
             this.checkBox1.Label = "东莞";
             this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox1_Click);
             // 
             // checkBox2
             // 
             this.checkBox2.Label = "惠州";
             this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox2_Click);
             // 
             // checkBox3
             // 
             this.checkBox3.Label = "深圳";
             this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox3_Click);
             // 
             // checkBox4
             // 
             this.checkBox4.Label = "汕尾";
             this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox4_Click);
             // 
             // group2
             // 
